@@ -1,0 +1,6 @@
+echo PORT=3000 > .env
+echo DB_USER=sa >> .env
+echo DB_PASSWORD=$123 >> .env
+echo DB_SERVER=localhost >> .env
+echo DB_DATABASE=Todo >> .env
+echo DB_PORT=1433 >> .env
