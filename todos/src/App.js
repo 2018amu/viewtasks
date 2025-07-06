@@ -1,10 +1,10 @@
-import AddTasks from "./components/AddTasks";
+import AddingTasks from "./components/AddingTasks";
 
 
 function App() {
   return (
     <div >
-      <AddTasks/>
+      <AddingTasks/>
     </div>
   );
 }
