@@ -4,15 +4,15 @@ services:
   backend:
     build: ./backend
     ports:
-      - "5000:5000"
-    # volumes:
-    #   - ./backend:/app
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
     environment:
       - NODE_ENV=development
       - DB_HOST=db
       - DB_PORT=1433
       - DB_USER=sa
-      - DB_PASSWORD="MyStrongPass123"
+      - DB_PASSWORD="$123"
       - DB_NAME=Todo
     depends_on:
       - db
@@ -21,8 +21,8 @@ services:
     build: ./todos
     ports:
       - "3000:3000"
-    # volumes:
-    #   - ./frontend:/app
+    volumes:
+      - ./frontend:/app
     environment:
       - CHOKIDAR_USEPOLLING=true
       - HOST=0.0.0.0
@@ -33,7 +33,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: mssql
     environment:
-      SA_PASSWORD: "MyStrongPass123"
+      SA_PASSWORD: "$123"
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
