@@ -7,17 +7,34 @@ function AddingTasks() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch only incomplete tasks on mount
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
+  // const fetchTasks = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await fetch("http://localhost:3000/api/tasks");
+  //     const data = await response.json();
+  //     const incomplete = data.filter((task) => !task.completed);
+  //     setTasks(incomplete);
+  //   } catch (error) {
+  //     console.error("Error fetching tasks:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const fetchTasks = async () => {
     setLoading(true);
     try {
       const response = await fetch("http://localhost:3000/api/tasks");
       const data = await response.json();
-      const incomplete = data.filter((task) => !task.completed);
+
+      console.log("Fetched tasks:", data); //
+
+      const incomplete = data
+        .filter((task) => !task.completed)
+        .map((task, index) => ({
+          ...task,
+          id: task.id || task.ID || task._id || index,
+        }));
+
       setTasks(incomplete);
     } catch (error) {
       console.error("Error fetching tasks:", error);
@@ -25,6 +42,11 @@ function AddingTasks() {
       setLoading(false);
     }
   };
+
+  // Fetch only incomplete tasks on mount
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   const handleAddTask = async () => {
     if (!title.trim() || !desc.trim()) {
@@ -103,8 +125,8 @@ function AddingTasks() {
         <p>No incomplete tasks available.</p>
       ) : (
         <div className="grid">
-          {tasks.map((task) => (
-            <div className="card" key={task.id}>
+          {tasks.map((task, index) => (
+            <div className="card" key={task.id || index}>
               <h3>{task.title}</h3>
               <p>{task.description}</p>
               <button

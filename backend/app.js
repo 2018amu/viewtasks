@@ -12,7 +12,7 @@ app.get('/api/tasks', async (req, res) => {
     await poolConnect; // Make sure DB is connected
     console.log("Connected to SQL Server");
 
-    const result = await pool.request().query('SELECT * FROM task');
+    const result = await pool.request().query('SELECT id, title, description, completed FROM task');
     res.json(result.recordset);
   } catch (err) {
     console.error('DB error:', err);
